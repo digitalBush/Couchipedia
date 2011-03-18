@@ -1,0 +1,6 @@
+To get started with this you need to:
+
+* Install CouchDB (http://www.couchbase.com/downloads)
+* Create a database name "couchipedia"
+* Download wikipedia dataset (http://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2)
+* Run the Importer passing an argument which points to the unzipped file from wikipedia.
