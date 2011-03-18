@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Importer {
     public static class Extensions {
@@ -29,6 +30,10 @@ namespace Importer {
 
         public static string ToJson<T>(this T value) {                    
            return JsonConvert.SerializeObject(value);        
+        }
+
+        public static T FromJson<T>(this string value) {
+            return JsonConvert.DeserializeObject<T>(value);
         }
 
     }

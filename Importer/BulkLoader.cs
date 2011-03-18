@@ -8,13 +8,15 @@ using Importer.Domain;
 
 namespace Importer {
     public class BulkLoader {
-        string uri;
-        public BulkLoader(string uri) { this.uri = "http://"+uri+"/_bulk_docs"; }
+        Uri uri;
+        public BulkLoader(string database) {
+            uri = new Uri("http://"+database+"/_bulk_docs"); 
+        }
 
         public int Count { get; set; }
 
         public void Load(string filename) {
-            Action<IEnumerable<XElement>> saveAction = Save;
+            Action<IEnumerable<Page>> saveAction = Save;
            
             var file = new WikiFileParser(filename);
 
@@ -34,8 +36,8 @@ namespace Importer {
             workers.All(x => x.AsyncWaitHandle.WaitOne());
         }
 
-        void Save(IEnumerable<XElement> elms) {
-            var json = new { docs = elms.Select(x => MakePage(x)) }.ToJson();
+        void Save<T>(IEnumerable<T> elms) {
+            var json = new { docs = elms }.ToJson();
             var request = WebRequest.Create(uri);
             request.Method = "POST";
             request.Timeout = 90000;
@@ -50,26 +52,6 @@ namespace Importer {
             }
         }
 
-        Page MakePage(XElement x) {
-            var rev = x.Named("revision");
-            var who = rev.Named("contributor");
-            return new Page() {
-                Title = x.Named("title").Value,
-                Redirect = x.Named("redirect").Value,
-                _id = x.Named("title").Value,
-                Revision = new Revision() {
-                    Id = rev.Named("id").Value,
-                    Timestamp = Convert.ToDateTime(rev.Named("timestamp").Value),
-                    Contributor = new Contributor() {
-                        Id = who.Named("id").Value,
-                        Username = who.Named("username").Value,
-                        Ip = who.Named("ip").Value
-                    },
-                    Minor = rev.Named("minor").Value,
-                    Comment = rev.Named("comment").Value,
-                    Text = rev.Named("text").Value,
-                }
-            };
-        }
+        
     }
 }
