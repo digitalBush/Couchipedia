@@ -1,0 +1,13 @@
+﻿@model Couchipedia.Domain.Page
+
+@{
+    View.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+    <h2>@Model.Title</h2>
+	@Html.RenderMarkdown(Model.Revision.Text)
+
+<div>
+Rendered in @ViewData["_elapsed"]ms
+</div>

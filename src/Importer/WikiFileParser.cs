@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.IO;
 using System.Xml;
-using Importer.Domain;
+using Couchipedia.Domain;
 
 namespace Importer {
     public class WikiFileParser {

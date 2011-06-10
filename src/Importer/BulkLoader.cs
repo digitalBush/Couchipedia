@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.Xml.Linq;
-using Importer.Domain;
+using Couchipedia.Domain;
 
 namespace Importer {
     public class BulkLoader {
@@ -22,12 +22,12 @@ namespace Importer {
 
             var workers = file
                 .GetPages()
-                .Chunk(1000)
+                .Chunk(800)
                 .Select(x => saveAction.BeginInvoke(x, null, null))
                 .Aggregate(new Queue<IAsyncResult>(),
                            (queue, item) => {
                                queue.Enqueue(item);
-                               if (queue.Count > 5)
+                               if (queue.Count > 4)
                                    queue.Dequeue().AsyncWaitHandle.WaitOne();
                                return queue;
                            });
@@ -37,7 +37,7 @@ namespace Importer {
         }
 
         void Save<T>(IEnumerable<T> elms) {
-            var json = new { docs = elms }.ToJson();
+            var json = new { all_or_nothing=true, docs = elms }.ToJson();
             var request = WebRequest.Create(uri);
             request.Method = "POST";
             request.Timeout = 90000;

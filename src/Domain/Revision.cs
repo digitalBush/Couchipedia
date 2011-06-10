@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Importer.Domain {
+namespace Couchipedia.Domain {
     public class Revision {
         public string Id { get; set; }
         public DateTime Timestamp { get; set; }

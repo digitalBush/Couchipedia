@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Importer.Domain {
+namespace Couchipedia.Domain {
     public class Page{
         public string _id { get; set; }
         public string Title { get; set; }
