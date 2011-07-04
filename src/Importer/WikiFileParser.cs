@@ -34,7 +34,7 @@ namespace Importer {
             var who = rev.Named("contributor");
             return new Page() {
                 Title = x.Named("title").Value,
-                Redirect = x.Named("redirect").Value,
+                //Redirect = x.Named("redirect").Value,
                 _id = x.Named("title").Value,
                 Revision = new Revision() {
                     Id = rev.Named("id").Value,
