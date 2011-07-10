@@ -11,18 +11,15 @@ namespace Web.Controllers
 {
     public class ArticleController : Controller
     {
-        public ActionResult Search(string text)
-        {
-            return RedirectToAction("View", new { id=text });
-        }
+
 
         [Timer]
-        public ActionResult View(string id,string redirectFrom)
+        public ActionResult Index(string id,string redirectFrom)
         {
             var articleJson = Couch.Uri.Get(HttpUtility.UrlEncode(id.ToLower()));
             var article = JsonConvert.DeserializeObject<Page>(articleJson);
             if (article.Redirect != null)
-                return RedirectToAction("View", new { id = article.Redirect,redirectFrom=id });
+                return RedirectToAction("Index", new { id = article.Redirect,redirectFrom=id });
             return View(article);
         }
 

@@ -16,5 +16,10 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult Search(string text)
+        {
+            return RedirectToAction("Index","Article", new { id = text });
+        }
+
     }
 }

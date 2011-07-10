@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Couchipedia.Domain {
     public class Page{
         static Regex _redirectRegex=new Regex(@"^#REDIRECT \[\[(.*?)]]",RegexOptions.Compiled);
         public string _id { get; set; }
         public string Title { get; set; }
+
+        [JsonIgnore]
         public string Redirect
         {
             get

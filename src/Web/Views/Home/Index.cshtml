@@ -1,13 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-@using (Html.BeginForm("Search","Article",FormMethod.Get)){
-    <fieldset>
-    <label for="id">What chu' want?</label>@Html.TextBox("text")
-    </fieldset>
+@using (Html.BeginForm("Search","Home",FormMethod.Get)){
+
+    <label for="id">What chu' want?</label>@Html.TextBox("text")<button type=submit>Go</button>
+
 
 }
