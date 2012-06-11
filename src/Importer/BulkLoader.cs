@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Net;
 using System.Xml.Linq;
@@ -27,7 +28,7 @@ namespace Importer {
                 .Aggregate(new Queue<IAsyncResult>(),
                            (queue, item) => {
                                queue.Enqueue(item);
-                               if (queue.Count > 4)
+                               if (queue.Count > 8)
                                    queue.Dequeue().AsyncWaitHandle.WaitOne();
                                return queue;
                            });
@@ -36,8 +37,22 @@ namespace Importer {
             workers.All(x => x.AsyncWaitHandle.WaitOne());
         }
 
-        void Save<T>(IEnumerable<T> elms) {
-            var json = new { all_or_nothing=true, docs = elms }.ToJson();
+        public static string sha1(string value) {
+            var bytes = Encoding.UTF8.GetBytes(value);
+            using(var provider=new SHA1CryptoServiceProvider()) {
+                var hash = provider.ComputeHash(bytes);
+            
+            return hash.Aggregate(
+                new StringBuilder(),
+                (s, b) => {
+                    s.Append(b.ToString("x2"));
+                    return s;
+                }).ToString();
+           }
+        }
+
+        void Save(IEnumerable<Page> elms) {
+            var json = new { all_or_nothing=true, docs = elms.Select(x=>new{_id=sha1(x.Title.ToLower()),Title=x.Title,Text=x.Revision.Text}) }.ToJson();
             var request = WebRequest.Create(uri);
             request.Method = "POST";
             request.Timeout = 90000;

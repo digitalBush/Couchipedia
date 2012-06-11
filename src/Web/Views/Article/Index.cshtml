@@ -1,4 +1,4 @@
-﻿@model Couchipedia.Domain.Page
+﻿@model Web.Controllers.Page
 
 @{
     ViewBag.Title = Model.Title;
@@ -7,7 +7,7 @@
 
 <h2>@Model.Title</h2>
 <div id='article'>
-@Html.RenderMarkdown(Model.Revision.Text)
+@Html.RenderMarkdown(Model.Text)
 </div>
 <div id='diagnostics'>
 Fetched in @ViewBag._elapsed ms

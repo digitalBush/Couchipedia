@@ -9,7 +9,7 @@ namespace Importer {
     public static class Extensions {
 
         public static XElement Named(this XElement elm, string name) {
-            var newElm = elm.Element("{http://www.mediawiki.org/xml/export-0.4/}" + name);
+            var newElm = elm.Element("{http://www.mediawiki.org/xml/export-0.6/}" + name);
             if (newElm == null)
                 newElm = new XElement("dummy");
             return newElm;
