@@ -4,8 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net;
-using System.Xml.Linq;
-using Couchipedia.Domain;
+using Importer.Models;
 
 namespace Importer {
     public class BulkLoader {
@@ -52,7 +51,14 @@ namespace Importer {
         }
 
         void Save(IEnumerable<Page> elms) {
-            var json = new { all_or_nothing=true, docs = elms.Select(x=>new{_id=sha1(x.Title.ToLower()),Title=x.Title,Text=x.Revision.Text}) }.ToJson();
+            var json = new {
+                all_or_nothing = true,
+                docs = elms.Select(x => new Domain.Page() {
+                    _id = Domain.Page.GenerateIdHash(x.Title),
+                    Title = x.Title,
+                    Text = x.Revision.Text
+                })
+            }.ToJson();
             var request = WebRequest.Create(uri);
             request.Method = "POST";
             request.Timeout = 90000;

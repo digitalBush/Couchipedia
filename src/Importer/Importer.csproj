@@ -50,6 +50,9 @@
     <Compile Include="CouchDatabaseWatcher.cs" />
     <Compile Include="DatabaseStats.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Models\Contributor.cs" />
+    <Compile Include="Models\Page.cs" />
+    <Compile Include="Models\Revision.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="WikiFileParser.cs" />
   </ItemGroup>

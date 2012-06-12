@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 
-namespace Couchipedia.Domain {
+namespace Importer.Models {
     public class Revision {
         public string Id { get; set; }
         public DateTime Timestamp { get; set; }

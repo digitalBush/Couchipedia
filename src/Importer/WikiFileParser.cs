@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using System.IO;
 using System.Xml;
-using Couchipedia.Domain;
+using Importer.Models;
 
 namespace Importer {
     public class WikiFileParser {
@@ -34,7 +32,6 @@ namespace Importer {
             var who = rev.Named("contributor");
             return new Page() {
                 Title = x.Named("title").Value,
-                //Redirect = x.Named("redirect").Value,
                 _id = x.Named("title").Value,
                 Revision = new Revision() {
                     Id = rev.Named("id").Value,
