@@ -13,8 +13,7 @@ namespace Web.Controllers {
     public class ArticleController : Controller {
         [Timer]
         public ActionResult Index(string id, string redirectFrom) {
-            var articleJson = Couch.Uri.Get(Page.GenerateIdHash(id));
-            var article = JsonConvert.DeserializeObject<Page>(articleJson);
+            var article = Couch.Uri.Get<Page>(Page.GenerateIdHash(id));
             if (article.Redirect != null)
                 return RedirectToAction("Index", new {id = article.Redirect, redirectFrom = id});
             return View(article);
